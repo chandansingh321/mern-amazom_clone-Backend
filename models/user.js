@@ -19,6 +19,14 @@ const UserSchema = new Schema({
     date:{
         type:Date,
         default:Date.now
+    },
+    resetToken:{
+        type:String,
+        default:''
+    },
+    resetTokenExpiry:{
+        type:Date,
+        default:''
     }
 })
 

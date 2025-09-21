@@ -1,13 +1,18 @@
+require('dotenv').config();
 const express = require('express')
 const app = express()
 const cors = require('cors');
-const port = 5000
+const port = process.env.PORT || 5000
 const mongoDB = require("./db")
 const authRoutes = require("./routes/signup-in.js")
 const productRoutes = require("./routes/Product.js")
 const categoriesRoutes = require("./routes/Categories.js")
 const cartRoutes = require("./routes/cart.js")
-const {authenticatmiddle} =require("./middleware/authenticatmiddle.js")
+const forgetPassword = require("./routes/forgetPassword.js")
+const {authenticatmiddle} =require("./middleware/authenticatmiddle.js");
+
+
+// const forgetPasswordRoutes = require("./routes/forgetPassword.js")
 
  // Add this line
 
@@ -37,6 +42,8 @@ app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/products', productRoutes); // Product routes
 app.use('/api/categories', categoriesRoutes); // Product routes
 app.use('/api/cart', cartRoutes); // Product routes
+app.use('/api/forget', forgetPassword); // forget password routes
+
 
 app.get('/', (req, res) => {
   res.send('Hello World! bobby')
