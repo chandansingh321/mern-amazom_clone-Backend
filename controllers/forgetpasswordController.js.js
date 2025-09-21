@@ -27,7 +27,7 @@ const forgetPassword = async (req, res) => {
     },
   });
 
-  const resetLink = `http://localhost:3000/reset-password/${token}`;
+  const resetLink = `https://mern-amazom-clone.vercel.app/reset-password/${token}`;
 
   const info = await transporter.sendMail({
     from: {
