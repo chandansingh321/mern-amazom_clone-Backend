@@ -22,7 +22,7 @@ mongoDB();
 
 // APPROACH 1: Use cors package (recommended)
 app.use(cors({
-  origin: 'http://localhost:3000', // Replace with your frontend URL
+  origin: 'https://mern-amazom-clone.vercel.app', // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
