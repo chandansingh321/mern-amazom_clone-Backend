@@ -2,11 +2,20 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: "smtp.gmail.com",
+  port: 587, // or Mailtrap for dev
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 const forgetPassword = async (req, res) => {
+  try {
   const { email } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({email});
   if (!user) return res.status(404).json({ message: 'User not found' });
 
   const token = crypto.randomBytes(32).toString('hex');
@@ -16,21 +25,10 @@ const forgetPassword = async (req, res) => {
   user.resetTokenExpiry = expiry;
   await user.save();
 
-  // Send email
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.email",
-    port: 587, // or Mailtrap for dev
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  const resetLink = `${process.env.frontend}/reset-password/${token}`;
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
   console.log("resetLink",resetLink)
 
-  const info = await transporter.sendMail({
+  const info = transporter.sendMail({
     from: {
         name: "amazone_clone service",
         address: process.env.EMAIL_USER
@@ -39,8 +37,13 @@ const forgetPassword = async (req, res) => {
     subject: 'Password Reset',
     html: `<p>You requested a password reset</p><a href="${resetLink}">Click here to reset</a>`,
   });
+  return res.json({ info, message: 'Check your email for reset link' });
+} catch (error) {
+  console.log(error)
+  return res.status(500).json({ message: error.message });
+  
+}
 
-  res.json({ info, message: 'Check your email for reset link' });
 };
 
 // Reset Password Controller

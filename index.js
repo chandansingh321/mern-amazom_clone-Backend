@@ -22,7 +22,7 @@ mongoDB();
 
 // APPROACH 1: Use cors package (recommended)
 app.use(cors({
-  origin: process.env.frontend, // Replace with your frontend URL
+  origin: process.env.FRONTEND_URL, // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
