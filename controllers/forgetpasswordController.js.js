@@ -19,7 +19,7 @@ const forgetPassword = async (req, res) => {
   // Send email
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    host: "smtp.gmail.email",
+    host: "smtp.gmail.com",
     port: 587, // or Mailtrap for dev
     auth: {
       user: process.env.EMAIL_USER,
