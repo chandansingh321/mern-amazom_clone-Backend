@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const mongoDB = async () => {
   await mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://0.0.0.0:27017/Amazone-clone"
+    process.env.MONGODB_URI
   );
     try{
         const fetched_data = await mongoose.connection.db.collection("item");

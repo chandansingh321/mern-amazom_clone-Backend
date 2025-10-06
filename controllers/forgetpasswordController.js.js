@@ -27,7 +27,7 @@ const forgetPassword = async (req, res) => {
     },
   });
 
-  const resetLink = `http://localhost:3000/reset-password/${token}`;
+  const resetLink = `${process.env.frontend}/reset-password/${token}`;
 
   const info = await transporter.sendMail({
     from: {
